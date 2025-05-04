@@ -1,5 +1,5 @@
-# Weekly-Scholar
-Weekly Scholar 🎓
+# Weekly Scholar 🎓
+
 Race through your syllabus, week by week!
 
 Weekly Scholar is an AI-powered tool designed to simplify study planning. By uploading a syllabus or topic PDF and specifying a timeline, users receive a customized weekly roadmap with clear objectives and short study notes. It’s the perfect companion for students aiming to stay consistent and focused in their academic journey.
