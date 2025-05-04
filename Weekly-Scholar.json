@@ -1,0 +1,180 @@
+{
+    "name": "StudySprint",
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "upload-syllabus",
+          "responseMode": "responseNode",
+          "options": {
+            "binaryPropertyName": "file"
+          }
+        },
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -520,
+          20
+        ],
+        "id": "787b8874-726a-4aa7-abff-c59a7a6f235e",
+        "name": "Pdf Upload Webhook",
+        "webhookId": "967f4d9b-c435-42aa-871a-3838144bb89b",
+        "notesInFlow": true,
+        "notes": "Upload your syllabus copy in Pdf Format"
+      },
+      {
+        "parameters": {
+          "operation": "pdf",
+          "binaryPropertyName": "=file0",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.extractFromFile",
+        "typeVersion": 1,
+        "position": [
+          -260,
+          20
+        ],
+        "id": "517244db-e544-47e4-b6ee-c90b6e10f8cd",
+        "name": "Extract from File"
+      },
+      {
+        "parameters": {
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+        "typeVersion": 1,
+        "position": [
+          20,
+          200
+        ],
+        "id": "c0ffbf92-b599-4118-bb3f-fd52e301eee1",
+        "name": "Groq Chat Model",
+        "credentials": {
+          "groqApi": {
+            "id": "Jt2yvakkcaczLMiF",
+            "name": "Groq account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "promptType": "define",
+          "text": "=You are an expert academic planner. A student named, {{ $('Pdf Upload Webhook').item.json.body.name }} has uploaded a course syllabus and requested a personalized study roadmap.\n\nGo through the whole syllabus content and distribute the syllabus content into {{ $('Pdf Upload Webhook').item.json.body.weeks }} weeks. Dont miss out any topic .For each week, return:\n\n- `title`: a short, meaningful title\n- `topics`: list of topics to cover that week\n- `objectives`: what the student should achieve\n- `notes`: short study advice\n\nFormat your response as valid JSON in the following structure:\n\n{\n  \"roadmap\": [\n    {\n      \"week\": 1,\n      \"title\": \"string\",\n      \"topics\": [\"string\", ...],\n      \"objectives\": [\"string\", ...],\n      \"notes\": \"string\"\n    },\n    ...\n  ],\n}\n\nONLY return in given JSON Format. Do not add markdown, explaination or extra formatting.\n\nStudent Inputs:\n- Weeks: {{ $('Pdf Upload Webhook').item.json.body.weeks }}\n- Student Syllabus: {{ $json.text }}",
+          "hasOutputParser": true,
+          "messages": {
+            "messageValues": [
+              {
+                "message": "Format the Output in Structured Json format. "
+              }
+            ]
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.chainLlm",
+        "typeVersion": 1.6,
+        "position": [
+          0,
+          0
+        ],
+        "id": "a4f3244d-b19c-4510-892b-31785562b6d3",
+        "name": "RoadMap Converter"
+      },
+      {
+        "parameters": {
+          "mode": "runOnceForEachItem",
+          "jsCode": "const text = $json.text;\n\nconst res = JSON.parse(text)\n\nreturn res;"
+        },
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          420,
+          0
+        ],
+        "id": "d6191a45-88d1-4709-90d9-f147dfc9898a",
+        "name": "Code"
+      },
+      {
+        "parameters": {
+          "respondWith": "json",
+          "responseBody": "={{ $json }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.respondToWebhook",
+        "typeVersion": 1.1,
+        "position": [
+          660,
+          0
+        ],
+        "id": "c14b689c-22b7-4a2f-9a6a-755b35189674",
+        "name": "Respond to Webhook"
+      }
+    ],
+    "pinData": {},
+    "connections": {
+      "Pdf Upload Webhook": {
+        "main": [
+          [
+            {
+              "node": "Extract from File",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Groq Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "RoadMap Converter",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract from File": {
+        "main": [
+          [
+            {
+              "node": "RoadMap Converter",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "RoadMap Converter": {
+        "main": [
+          [
+            {
+              "node": "Code",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Code": {
+        "main": [
+          [
+            {
+              "node": "Respond to Webhook",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "active": false,
+    "settings": {
+      "executionOrder": "v1"
+    },
+    "versionId": "0500c986-a170-4c78-bdd3-be3dc8e49755",
+    "meta": {
+      "templateCredsSetupCompleted": true,
+      "instanceId": "9e96e296c43b4c48a0f2f8befe36061f05ba3ac8e6e105d01298ea6614989a0e"
+    },
+    "id": "Jmu6ZxPwuTfOqNi7",
+    "tags": []
+  }
