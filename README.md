@@ -44,10 +44,8 @@ AI Engine: LLaMA3-8B-8192 for generating human-like responses and study notes.
 
 📖 Project Structure
 pgsql
-Copy
-Edit
 .
-├── frontend/
+├── frontend/ 
 │   ├── components/
 │   ├── pages/
 │   └── styles/
