@@ -72,59 +72,17 @@ Synchronize roadmaps with calendar reminders.
 Include quiz generators for periodic reviews.
 
 🖼️ Screenshots
+![image](https://github.com/user-attachments/assets/f7a7349a-d29f-4224-9c2a-6bc90499327e)
+![image](https://github.com/user-attachments/assets/b7641694-70e7-4575-84ce-38c25fd8fc4f)
+![image](https://github.com/user-attachments/assets/1baa29ca-8bd5-470f-953c-04e00851ae6b)
+![image](https://github.com/user-attachments/assets/dabf557a-77c0-445f-bcc6-fa63f295cc60)
+![image](https://github.com/user-attachments/assets/78ae6729-a3ca-4226-a251-137a0bc0f7a9)
+
+
+
 Landing Page
 
 Weekly Roadmap
-
-🛠️ Setup Instructions
-Clone the repository:
-
-bash
-Copy
-Edit
-git clone https://github.com/your-username/weekly-scholar.git
-Navigate to the project directory:
-
-bash
-Copy
-Edit
-cd weekly-scholar
-Install dependencies:
-
-bash
-Copy
-Edit
-npm install
-Start the development server:
-
-bash
-Copy
-Edit
-npm run dev
-📝 Contributing
-We welcome contributions! Please follow these steps:
-
-Fork the repository.
-
-Create a new branch:
-
-bash
-Copy
-Edit
-git checkout -b feature-name
-Commit your changes:
-
-bash
-Copy
-Edit
-git commit -m "Add feature-name"
-Push the branch:
-
-bash
-Copy
-Edit
-git push origin feature-name
-Open a pull request.
 
 🤝 License
 This project is licensed under the MIT License.
